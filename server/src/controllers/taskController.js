@@ -43,7 +43,7 @@ export const updateTask = async (req, res, next) => {
     const task = await Task.findOneAndUpdate(
       { _id: req.params.id, user: req.user.id },
       { title, description, deadline, status },
-      { new: true, runValidators: true, omitUndefined: true }
+      { returnDocument: 'after', runValidators: true, omitUndefined: true }
     );
     if (!task) {
       return res.status(404).json({ message: "Task not found" });

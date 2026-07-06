@@ -26,20 +26,18 @@ const userSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-userSchema.pre('save', function(next) {
+userSchema.pre('save', async function() {
   // إذا لم يتم تعديل الباسورد، أكمل
   if (!this.isModified('password')) {
-    return next();
+    return;
   }
 
-  // تشفير الباسورد باستخدام bcryptjs بشكل متزامن لتجنب مشاكل الـ next
-  bcrypt.hash(this.password, 10, (err, hash) => {
-    if (err) {
-      return next(err);
-    }
-    this.password = hash;
-    next();
-  });
+  try {
+    const salt = await bcrypt.genSalt(10);
+    this.password = await bcrypt.hash(this.password, salt);
+  } catch (err) {
+    throw err;
+  }
 });
 
 userSchema.methods.comparePassword = async function (candidate) {
