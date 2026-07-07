@@ -14,23 +14,11 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 // Core middleware
-// Configure CORS to accept the client URL (from env) and common deploy URLs
-const allowedOrigins = [
-  process.env.CLIENT_URL,
-  "https://tasky.vercel.app",
-  "https://tasky-rosy-pi.vercel.app",
-  "https://tasky-git-main-gharbinz1222.vercel.app",
-  "https://tasky-eumpjdysv-gharbinz1222.vercel.app",
-  "http://localhost:5173",
-].filter(Boolean);
+// Configure CORS to accept requests from any origin in production
 app.use(
   cors({
-    origin: function (origin, callback) {
-      // allow non-browser tools like curl or server-to-server requests
-      if (!origin) return callback(null, true);
-      if (allowedOrigins.indexOf(origin) !== -1) return callback(null, true);
-      return callback(new Error("Not allowed by CORS"), false);
-    },
+    origin: true,
+    methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
   })
 );
