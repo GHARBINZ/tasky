@@ -1,8 +1,9 @@
 import axios from 'axios';
 
+const backendOrigin = (import.meta.env.VITE_API_URL || 'https://tasky-backend-0a2q.onrender.com').replace(/\/$/, '');
+
 const api = axios.create({
-  // هذا الرابط سيعمل تلقائياً مع Vercel و Render
-  baseURL: import.meta.env.VITE_API_URL || 'https://tasky-backend-0a2q.onrender.com/api',
+  baseURL: `${backendOrigin}/api`,
   headers: { 'Content-Type': 'application/json' },
 });
 
