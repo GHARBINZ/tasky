@@ -1,0 +1,493 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --color-canvas: #F5F0E6; /* page background */
+  --color-surface: #EAE2D6; /* cards, inputs */
+  --color-accent: #A38666; /* buttons, active status */
+  --color-accent-deep: #8A7057; /* accent hover */
+  --color-ink: #5D4E3A; /* primary text */
+  --color-ink-soft: #8A7D6A; /* muted text */
+  --color-line: #DCD0C0; /* subtle borders */
+}
+
+@keyframes skeleton-shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.skeleton-bar {
+  background: linear-gradient(
+    90deg,
+    #dcd0c0 0%,
+    #e6ddd0 20%,
+    #dcd0c0 40%,
+    #dcd0c0 100%
+  );
+  background-size: 200% 100%;
+  animation: skeleton-shimmer 1.6s ease-in-out infinite;
+}
+
+.react-calendar {
+  width: 100%;
+  border: none;
+  border-radius: 1rem;
+  background: #F5F0E6;
+  color: #5D4E3A;
+  font-family: inherit;
+  box-shadow: inset 0 0 0 1px #DCD0C0;
+}
+
+.dark .react-calendar {
+  background: #2B241C;
+  color: #EDE4D3;
+  box-shadow: inset 0 0 0 1px #4A3F32;
+}
+
+.react-calendar__navigation {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.react-calendar__navigation button {
+  min-width: 3.5rem;
+  padding: 0.7rem 0.9rem;
+  border-radius: 9999px;
+  border: 1px solid #DCD0C0;
+  background: #EAE2D6;
+  color: #5D4E3A;
+  font-weight: 600;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.dark .react-calendar__navigation button {
+  border-color: #4A3F32;
+  background: #1E1912;
+  color: #EDE4D3;
+}
+
+.react-calendar__navigation button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.react-calendar__month-view__weekdays {
+  text-transform: uppercase;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #8A7D6A;
+}
+
+.dark .react-calendar__month-view__weekdays {
+  color: #9A8B76;
+}
+
+.react-calendar__month-view__days__day {
+  border-radius: 0.85rem;
+  padding: 0.75rem 0.35rem;
+}
+
+.react-calendar__tile {
+  border-radius: 0.85rem;
+  padding: 0.7rem 0.35rem;
+  background: transparent;
+  color: inherit;
+}
+
+.react-calendar__tile--now {
+  background: rgba(163, 134, 102, 0.18);
+}
+
+.react-calendar__tile--active {
+  background: #A38666;
+  color: #F5F0E6;
+}
+
+.react-calendar__tile:enabled:hover,
+.react-calendar__navigation button:enabled:hover {
+  background: rgba(163, 134, 102, 0.22);
+}
+
+.react-calendar__tile--hasActive {
+  font-weight: 700;
+}
+
+.react-calendar__month-view__days__day--weekend {
+  color: #7F715B;
+}
+
+.dark .react-calendar__month-view__days__day--weekend {
+  color: #C0A67D;
+}
+
+.react-calendar__tile--neighboringMonth {
+  color: #B7A890;
+}
+
+.dark .react-calendar__tile--neighboringMonth {
+  color: #7F725D;
+}
+
+.react-calendar__tile abbr {
+  text-decoration: none;
+}
+
+.earth-calendar-inner {
+  border: none;
+}
+
+/* Utility aliases to use as CSS variables in classes */
+:root {
+  --bg-canvas: var(--color-canvas);
+  --bg-surface: var(--color-surface);
+  --accent: var(--color-accent);
+  --accent-deep: var(--color-accent-deep);
+  --ink: var(--color-ink);
+  --ink-soft: var(--color-ink-soft);
+  --line: var(--color-line);
+}
+
+/* Input tokens: single source of truth for inputs across the app */
+:root {
+  --input-bg: #EAE2D6;
+  --input-text: #3E362E;
+  --input-placeholder: #8C7B6A;
+  --input-border: #C4B7A6;
+  --input-focus-border: #A38666;
+  --input-focus-ring: rgba(163, 134, 102, 0.16);
+}
+
+/* Dark-mode overrides for input tokens */
+.dark :root,
+:root.dark {
+  --input-bg: #2B241C;
+  --input-text: #EAE2D6;
+  --input-placeholder: #6B5F52;
+  --input-border: #4A3F32;
+  --input-focus-border: #A38666;
+  --input-focus-ring: rgba(163, 134, 102, 0.18);
+}
+
+:root {
+  --text: #6b6375;
+  --text-h: #08060d;
+  --bg: #fff;
+  --border: #e5e4e7;
+  --code-bg: #f4f3ec;
+  --accent: #aa3bff;
+  --accent-bg: rgba(170, 59, 255, 0.1);
+  --accent-border: rgba(170, 59, 255, 0.5);
+  --social-bg: rgba(244, 243, 236, 0.5);
+  --shadow:
+    rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
+
+  --sans: system-ui, 'Segoe UI', Roboto, sans-serif;
+  --heading: system-ui, 'Segoe UI', Roboto, sans-serif;
+  --mono: ui-monospace, Consolas, monospace;
+
+  font: 18px/145% var(--sans);
+  letter-spacing: 0.18px;
+  color-scheme: light dark;
+  color: var(--text);
+  background: var(--bg);
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  @media (max-width: 1024px) {
+    font-size: 16px;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --text: #9ca3af;
+    --text-h: #f3f4f6;
+    --bg: #16171d;
+    --border: #2e303a;
+    --code-bg: #1f2028;
+    --accent: #c084fc;
+    --accent-bg: rgba(192, 132, 252, 0.15);
+    --accent-border: rgba(192, 132, 252, 0.5);
+    --social-bg: rgba(47, 48, 58, 0.5);
+    --shadow:
+      rgba(0, 0, 0, 0.4) 0 10px 15px -3px, rgba(0, 0, 0, 0.25) 0 4px 6px -2px;
+  }
+
+  #social .button-icon {
+    filter: invert(1) brightness(2);
+  }
+}
+
+body {
+  margin: 0;
+  background: #f4f5f7;
+}
+
+#root {
+  min-height: 100vh;
+  width: 100%;
+  margin: 0;
+  text-align: left;
+  box-sizing: border-box;
+}
+
+h1,
+h2 {
+  font-family: var(--heading);
+  font-weight: 500;
+  /* Do not force a global color here — let utilities or inherited text color control headings */
+  color: inherit;
+}
+
+h1 {
+  font-size: 36px;
+  letter-spacing: -1.08px;
+  margin: 0 0 8px;
+}
+
+h2 {
+  font-size: 24px;
+  line-height: 118%;
+  letter-spacing: -0.24px;
+  margin: 0 0 8px;
+}
+
+p {
+  margin: 0;
+}
+
+.auth-container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.auth-card {
+  width: 100%;
+  max-width: 380px;
+  background: #fff;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.auth-card h1 {
+  margin: 0 0 0.5rem;
+  font-size: 1.5rem;
+  text-align: center;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.field label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #444;
+}
+
+.field input {
+  padding: 0.6rem 0.75rem;
+  border: 1px solid #d0d3d9;
+  border-radius: 8px;
+  font-size: 0.95rem;
+}
+
+.field input:focus {
+  outline: none;
+  border-color: #4f46e5;
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.15);
+}
+
+.auth-card button {
+  padding: 0.7rem;
+  border: none;
+  border-radius: 8px;
+  background: #4f46e5;
+  color: #fff;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.auth-card button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.auth-switch {
+  text-align: center;
+  font-size: 0.85rem;
+  color: #555;
+}
+
+.error {
+  color: #dc2626;
+  font-size: 0.8rem;
+}
+
+.confirm-label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #374151;
+  align-self: center;
+  margin-right: 0.25rem;
+}
+
+.btn-danger {
+  background: #dc2626;
+  color: #fff;
+  border: 1px solid #dc2626;
+  padding: 0.45rem 0.8rem;
+  border-radius: 8px;
+}
+
+.btn-danger:hover {
+  background: #b91c1c;
+  border-color: #b91c1c;
+}
+
+.btn-danger-outline {
+  background: #fff;
+  color: #dc2626;
+  border: 1px solid #f0b4b4;
+  padding: 0.45rem 0.8rem;
+  border-radius: 8px;
+}
+
+.btn-danger-outline:hover {
+  background: #fef2f2;
+  border-color: #dc2626;
+}
+
+.navbar {
+  background: #fff;
+  border-bottom: 1px solid #e5e7eb;
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+
+.navbar-inner {
+  max-width: 1024px;
+  margin: 0 auto;
+  padding: 0 1.25rem;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.navbar-brand {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #4f46e5;
+  text-decoration: none;
+  letter-spacing: -0.02em;
+}
+
+.navbar-menu {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.navbar-user {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.navbar-avatar {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: #4f46e5;
+  color: #fff;
+  font-size: 0.8rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.navbar-username {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #374151;
+}
+
+.navbar-logout {
+  padding: 0.45rem 0.9rem;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  background: #fff;
+  color: #374151;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s;
+}
+
+.navbar-logout:hover {
+  background: #f9fafb;
+  border-color: #9ca3af;
+}
+
+.navbar-toggle {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+}
+
+.navbar-toggle span {
+  width: 22px;
+  height: 2px;
+  background: #374151;
+  border-radius: 2px;
+}
+
+@media (max-width: 640px) {
+  .navbar-toggle {
+    display: flex;
+  }
+
+  .navbar-menu {
+    position: absolute;
+    top: 60px;
+    right: 0;
+    left: 0;
+    background: #fff;
+    border-bottom: 1px solid #e5e7eb;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+    padding: 1rem 1.25rem;
+    display: none;
+  }
+
+  .navbar-menu.open {
+    display: flex;
+  }
+}

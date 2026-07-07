@@ -1,6 +1,19 @@
 import { createContext, useContext, useEffect, useMemo, useState } from 'react';
 import api from '../api/axios.js';
 
+const BACKEND_ORIGIN = 'http://localhost:5000';
+
+const normalizeAvatar = (avatar) => {
+  if (!avatar) return '';
+  if (avatar.startsWith('http')) return avatar;
+  return `${BACKEND_ORIGIN}${avatar}`;
+};
+
+const normalizeUser = (u) => {
+  if (!u) return u;
+  return { ...u, avatar: normalizeAvatar(u.avatar) };
+};
+
 const AuthContext = createContext(null);
 
 export const AuthProvider = ({ children }) => {
@@ -17,7 +30,8 @@ export const AuthProvider = ({ children }) => {
 
       try {
         const { data } = await api.get('/auth/me');
-        setUser(data.user ?? data);
+        const fetched = data.user ?? data;
+        setUser(normalizeUser(fetched));
       } catch {
         localStorage.removeItem('token');
         setToken(null);
@@ -34,7 +48,7 @@ export const AuthProvider = ({ children }) => {
     const { data } = await api.post('/auth/login', { email, password });
     localStorage.setItem('token', data.token);
     setToken(data.token);
-    setUser(data.user);
+    setUser(normalizeUser(data.user));
     return data.user;
   };
 
@@ -42,7 +56,7 @@ export const AuthProvider = ({ children }) => {
     const { data } = await api.post('/auth/register', { name, email, password });
     localStorage.setItem('token', data.token);
     setToken(data.token);
-    setUser(data.user);
+    setUser(normalizeUser(data.user));
     return data.user;
   };
 
@@ -50,6 +64,15 @@ export const AuthProvider = ({ children }) => {
     localStorage.removeItem('token');
     setToken(null);
     setUser(null);
+  };
+
+  const updateUser = (updatedFields) => {
+    // Ensure avatar is an absolute URL so img src works after refresh
+    const fields = { ...updatedFields };
+    if (fields.avatar) {
+      fields.avatar = normalizeAvatar(fields.avatar);
+    }
+    setUser((prev) => ({ ...prev, ...fields }));
   };
 
   const value = useMemo(() => ({
@@ -60,6 +83,7 @@ export const AuthProvider = ({ children }) => {
     login,
     register,
     logout,
+    updateUser,
   }), [user, token, loading]);
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

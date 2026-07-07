@@ -21,6 +21,17 @@ const taskSchema = new mongoose.Schema(
       enum: ["pending", "completed"],
       default: "pending",
     },
+    category: {
+      type: String,
+      enum: ["Work", "Errands", "Personal", "Urgent"],
+      default: "Personal",
+    },
+    subTasks: [
+      {
+        text: { type: String, required: true, trim: true },
+        completed: { type: Boolean, default: false },
+      },
+    ],
     user: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",

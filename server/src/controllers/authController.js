@@ -11,6 +11,7 @@ const sanitize = (user) => ({
   id: user._id,
   name: user.name,
   email: user.email,
+  avatar: user.avatar || "",
 });
 
 export const register = async (req, res, next) => {

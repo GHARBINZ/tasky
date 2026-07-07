@@ -1,13 +1,42 @@
+import mongoose from "mongoose";
 import Task from "../models/Task.js";
+
+const sanitizeSubTasks = (subTasks) => {
+  if (!Array.isArray(subTasks)) return undefined;
+
+  return subTasks
+    .filter(Boolean)
+    .map((subTask) => {
+      const normalized = {
+        text: typeof subTask?.text === "string" ? subTask.text.trim() : "",
+        completed: Boolean(subTask?.completed),
+      };
+
+      const candidateId = subTask?._id;
+      if (
+        (typeof candidateId === "string" && mongoose.Types.ObjectId.isValid(candidateId)) ||
+        candidateId instanceof mongoose.Types.ObjectId
+      ) {
+        normalized._id = candidateId;
+      }
+
+      return normalized;
+    })
+    .filter((subTask) => subTask.text.length > 0);
+};
 
 export const createTask = async (req, res, next) => {
   try {
-    const { title, description, deadline, status } = req.body;
+    const { title, description, deadline, status, category, subTasks } = req.body;
+    const sanitizedSubTasks = sanitizeSubTasks(subTasks);
+
     const task = await Task.create({
       title,
       description,
       deadline,
       status,
+      category,
+      ...(sanitizedSubTasks !== undefined ? { subTasks: sanitizedSubTasks } : {}),
       user: req.user.id,
     });
     res.status(201).json(task);
@@ -39,10 +68,20 @@ export const getTask = async (req, res, next) => {
 
 export const updateTask = async (req, res, next) => {
   try {
-    const { title, description, deadline, status } = req.body;
+    const { title, description, deadline, status, category, subTasks } = req.body;
+    const sanitizedSubTasks = sanitizeSubTasks(subTasks);
+    const updatePayload = {
+      title,
+      description,
+      deadline,
+      status,
+      category,
+      ...(sanitizedSubTasks !== undefined ? { subTasks: sanitizedSubTasks } : {}),
+    };
+
     const task = await Task.findOneAndUpdate(
       { _id: req.params.id, user: req.user.id },
-      { title, description, deadline, status },
+      updatePayload,
       { returnDocument: 'after', runValidators: true, omitUndefined: true }
     );
     if (!task) {
