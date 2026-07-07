@@ -15,7 +15,12 @@ const __dirname = path.dirname(__filename);
 
 // Core middleware
 // Configure CORS to accept the client URL (from env) and common deploy URLs
-const allowedOrigins = [process.env.CLIENT_URL, "https://tasky.vercel.app", "http://localhost:5173"].filter(Boolean);
+const allowedOrigins = [
+  process.env.CLIENT_URL,
+  "https://tasky.vercel.app",
+  "https://tasky-rosy-pi.vercel.app",
+  "http://localhost:5173",
+].filter(Boolean);
 app.use(
   cors({
     origin: (origin, callback) => {
