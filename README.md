@@ -13,9 +13,9 @@ Tasky is a modern, responsive, and secure task management application built with
 
 | Feature | Screenshot |
 | :--- | :--- |
-| **Sign In** | ![Sign In](Screenshots/Sign%20in.png) |
-| **Dashboard / Tasks** | ![Dashboard](Screenshots/add%20&%20edit%20&%20delete%20&%20view%20a%20Task.png) |
-| **Profile & Settings** | ![Profile](Screenshots/view%20profile%20&%20update%20info%20&%20update%20image.png) |
+| **Sign In** | ![Sign In](Screenshots/sign-in.png) |
+| **Dashboard / Tasks** | ![Dashboard](Screenshots/dashboard.png) |
+| **Profile & Settings** | ![Profile](Screenshots/profile.png) |
 
 ---
 

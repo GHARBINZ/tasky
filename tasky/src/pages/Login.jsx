@@ -43,15 +43,13 @@ const Login = () => {
 
   return (
     <div className="flex min-h-screen items-center justify-center px-4 bg-[#F5F0E6] text-[#5D4E3A] dark:bg-[#1E1912] dark:text-[#EDE4D3]">
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        className="w-full max-w-sm rounded-2xl border border-[#DCD0C0] bg-[#EAE2D6] p-8 shadow-sm dark:border-[#4A3F32] dark:bg-[#2B241C]"
-      >
+      <div className="w-full max-w-sm rounded-2xl border border-[#DCD0C0] bg-[#EAE2D6] p-8 shadow-sm dark:border-[#4A3F32] dark:bg-[#2B241C]">
+        <form onSubmit={handleSubmit(onSubmit)}>
         <h1 className="mb-1 text-3xl font-bold tracking-tight text-[#5D4E3A] dark:text-[#EDE4D3]">
           Welcome back
         </h1>
         <p className="mb-6 text-sm text-[#8A7D6A] dark:text-[#9A8B76]">
-          Log in to your TaskFlow account.
+          Log in to your Tasky account.
         </p>
 
         {errors.root && (
@@ -115,7 +113,12 @@ const Login = () => {
             Register
           </Link>
         </p>
-      </form>
+        </form>
+
+        <div className="mt-8 text-center text-sm text-[#8A7D6A] dark:text-[#9A8B76]">
+          Built with love by <span className="font-semibold text-[#A38666]">Mohamed Amine Gharbi</span>
+        </div>
+      </div>
     </div>
   );
 };

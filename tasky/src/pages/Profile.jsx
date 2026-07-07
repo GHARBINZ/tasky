@@ -14,6 +14,16 @@ const resolveAvatar = (avatar) => {
   return avatar;
 };
 
+const maskEmail = (email) => {
+  if (!email) return "";
+  const [localPart, domain] = email.split("@");
+  if (!domain || !localPart) return email;
+
+  const visiblePrefix = localPart[0] || "";
+  const maskedLocal = `${visiblePrefix}${"*".repeat(Math.max(3, localPart.length - 1))}`;
+  return `${maskedLocal}@${domain}`;
+};
+
 const Profile = () => {
   const { user, updateUser } = useAuth();
   const navigate = useNavigate();
@@ -171,7 +181,12 @@ const Profile = () => {
 
               <div>
                 <label className="mb-1.5 block text-sm font-medium text-[#5D4E3A] dark:text-[#DCD0C0]">Email</label>
-                <input type="email" value={user?.email || ""} readOnly className={inputClasses + " cursor-default opacity-90"} />
+                <input
+                  type="email"
+                  value={maskEmail(user?.email || "")}
+                  readOnly
+                  className={inputClasses + " cursor-default opacity-90"}
+                />
                 <p className="mt-1.5 text-xs text-[#8A7D6A] dark:text-[#9A8B76]">Change your email in the Security section below.</p>
               </div>
 

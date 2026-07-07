@@ -48,7 +48,7 @@ const Register = () => {
         className="w-full max-w-sm rounded-2xl border border-line bg-surface p-8 shadow-sm"
       >
         <h1 className="mb-1 text-2xl font-semibold tracking-tight text-ink">Create account</h1>
-        <p className="mb-6 text-sm text-ink-soft">Start organizing with TaskFlow.</p>
+        <p className="mb-6 text-sm text-ink-soft">Start organizing with Tasky.</p>
 
         {errors.root && (
           <p className="mb-4 rounded-xl bg-red-100 px-3 py-2 text-sm text-red-700">
