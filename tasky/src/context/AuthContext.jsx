@@ -1,7 +1,8 @@
 import { createContext, useContext, useEffect, useMemo, useState } from 'react';
 import api from '../api/axios.js';
 
-const BACKEND_ORIGIN = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+// نحي أي fallback للـ localhost، وأجبره يستعمل الـ URL هذا
+const BACKEND_URL = import.meta.env.VITE_API_URL || "https://tasky-backend-0a2q.onrender.com";
 
 const normalizeAvatar = (avatar) => {
   if (!avatar) return '';
