@@ -29,11 +29,6 @@ app.use(
 );
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use((req, res, next) => {
-  console.log(`📩 Incoming Request: ${req.method} ${req.path}`);
-  console.log("Current body:", req.body);
-  next();
-});
 
 // Health check
 app.get("/api/health", (req, res) => {

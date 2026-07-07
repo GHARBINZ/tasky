@@ -9,15 +9,11 @@ const PORT = process.env.PORT || 5000;
 const startServer = async () => {
   try {
     await mongoose.connect(process.env.MONGO_URI);
-    console.log("✅ MongoDB connected");
 
-    const server = app.listen(PORT, () => {
-      console.log(`🚀 Server running on http://localhost:${PORT}`);
-    });
+    const server = app.listen(PORT);
 
     // Graceful shutdown
     const shutdown = async (signal) => {
-      console.log(`\n${signal} received. Closing server...`);
       server.close(async () => {
         await mongoose.connection.close();
         process.exit(0);
