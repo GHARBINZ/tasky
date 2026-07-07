@@ -19,15 +19,17 @@ const allowedOrigins = [
   process.env.CLIENT_URL,
   "https://tasky.vercel.app",
   "https://tasky-rosy-pi.vercel.app",
+  "https://tasky-git-main-gharbinz1222.vercel.app",
+  "https://tasky-eumpjdysv-gharbinz1222.vercel.app",
   "http://localhost:5173",
 ].filter(Boolean);
 app.use(
   cors({
-    origin: (origin, callback) => {
+    origin: function (origin, callback) {
       // allow non-browser tools like curl or server-to-server requests
       if (!origin) return callback(null, true);
-      if (allowedOrigins.includes(origin)) return callback(null, true);
-      return callback(new Error("CORS policy: This origin is not allowed."), false);
+      if (allowedOrigins.indexOf(origin) !== -1) return callback(null, true);
+      return callback(new Error("Not allowed by CORS"), false);
     },
     credentials: true,
   })
